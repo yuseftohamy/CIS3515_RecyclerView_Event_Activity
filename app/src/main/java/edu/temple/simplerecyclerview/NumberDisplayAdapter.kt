@@ -1,35 +1,39 @@
 package edu.temple.simplerecyclerview
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-// TODO(Step 1: Implement click behavior)
+class NumberDisplayAdapter(_numbers: Array<Int>): RecyclerView.Adapter<NumberDisplayAdapter.NumberViewHolder>() {
 
-// TODO (Step 1a: Accept lambda in constructor)
-class NumberDisplayAdapter (private val numbers: Array<Int>) : RecyclerView.Adapter<NumberDisplayAdapter.NumberViewHolder>() {
+    private val numbers = _numbers
 
-    // TODO (Step 1b: Invoke lambda via onClickListener)
-    inner class NumberViewHolder (layout: View) : RecyclerView.ViewHolder (layout) {
-        // enumerate views inside layout
-        val textView = layout.findViewById<TextView>(R.id.textView)
-
+    class NumberViewHolder (val _textView: TextView) : RecyclerView.ViewHolder (_textView) {
+        val textView = _textView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumberViewHolder {
+        return NumberViewHolder(
+            TextView(
+                parent.context
+            ).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        val layout = LayoutInflater.from(parent.context).inflate(R.layout.textview_layout, parent, false)
-        return NumberViewHolder(layout)
-    }
+            }
 
-    override fun getItemCount(): Int {
-        return numbers.size
+        )
     }
 
     override fun onBindViewHolder(holder: NumberViewHolder, position: Int) {
-        holder.textView.text = numbers[position].toString()
+        holder.textView.text = "${numbers[position]}"
+        holder.textView.textSize = numbers[position].toFloat()
+
     }
+
+    override fun getItemCount() = numbers.size;
+
 
 }
